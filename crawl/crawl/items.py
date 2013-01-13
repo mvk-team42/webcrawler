@@ -5,7 +5,7 @@
 
 from scrapy.item import Item, Field
 
-class CrawlItem(Item):
-    # define the fields for your item here like:
-    # name = Field()
-    pass
+class DmozItem(Item):
+    title = Field()
+    link = Field()
+    desc = Field()
