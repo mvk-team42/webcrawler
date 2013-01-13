@@ -1,4 +1,7 @@
 from scrapy.spider import BaseSpider
+from scrapy.selector import HtmlXPathSelector
+
+from crawl.items import DmozItem
 
 class DmozSpider(BaseSpider):
     name = "dmoz"
@@ -8,5 +11,13 @@ class DmozSpider(BaseSpider):
             "http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"
             ]
     def parse(self, response):
-        filename = response.url.split("/")[-2]
-        open(filename, 'wb').write(response.body)
+        hxs = HtmlXPathSelector(response)
+        sites = hxs.select('//ul/li')
+        items = []
+        for site in sites:
+            item = DmozItem()
+            item['title'] = site.select('a/text()').extract()
+            item['link'] = site.select('a/@href').extract()
+            item['desc'] = site.select('text()').extract()
+            items.append(item)
+        return items
