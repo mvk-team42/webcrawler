@@ -10,7 +10,7 @@ Using python 2.7, run:
 
 Running
 -------
-In the crawl folder, run:  
+In the project folder, run:  
    `scrapy crawl dmoz -o items.json -t json`
 
 
