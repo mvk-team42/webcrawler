@@ -16,6 +16,7 @@ class VideoSpider(CrawlSpider):
    )
 
    def parse_item(self, response):
+      self.log('Response from' + response.url)
       hxs = HtmlXPathSelector(response)
       item = VideoItem()
       item['title'] = hxs.select('//title/text()').extract()
