@@ -12,3 +12,4 @@ class DmozItem(Item):
 
 class VideoItem(Item):
     title = Field()
+    views = Field()

@@ -12,10 +12,11 @@ class VideoSpider(BaseSpider):
 
    def parse(self, response):
        hxs = HtmlXPathSelector(response)
-       videos = hxs.select('//a[@class="video-title ellipsis"]')
+       videos = hxs.select('//div[@class="video-data"]')
        items = []
        for video in videos:
            item = VideoItem()
-           item['title'] = video.select('text()').extract()
+           item['title'] = video.select('./a[@class="video-title ellipsis"]/text()').extract()
+           item['views'] = video.select('.//span[@class="viewcount"]/text()').extract()
            items.append(item)
        return items
