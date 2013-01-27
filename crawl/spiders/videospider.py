@@ -3,20 +3,20 @@ from scrapy.selector import HtmlXPathSelector
 
 from crawl.items import VideoItem
 
-class VideoSpider(BaseSpider):
+class VideoSpider(CrawlSpider):
    name = "vid"
    allowed_domains = ["youtube.com"]
    start_urls = [
            "http://www.youtube.com/charts/videos_views?t=a&gl=US",
    ]
 
-   def parse(self, response):
+   rules = (
+        Rule(SgmlLinkExtractor(allow=('/watch?v=', )), callback='parse_item'),
+    )
+
+    def parse_item(self, response):
        hxs = HtmlXPathSelector(response)
-       videos = hxs.select('//div[@class="video-data"]')
-       items = []
-       for video in videos:
-           item = VideoItem()
-           item['title'] = video.select('./a[@class="video-title ellipsis"]/text()').extract()
-           item['views'] = video.select('.//span[@class="viewcount"]/text()').extract()
-           items.append(item)
-       return items
+       item = VideoItem()
+       item['title'] = hxs.select('//title/text()').extract()
+       item['top_comment'] = hxs.select('//li[@class="comment" and @data-tag="top"]')[0]
+       return item
