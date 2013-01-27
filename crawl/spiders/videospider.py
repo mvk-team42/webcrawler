@@ -22,5 +22,9 @@ class VideoSpider(CrawlSpider):
       hxs = HtmlXPathSelector(response)
       item = VideoItem()
       item['title'] = hxs.select('//title/text()').extract()
-      item['top_comment'] = hxs.select('//li[@class="comment" and @data-tag="top"]')[0]
+
+      comments = hxs.select('//li[@class="comment" and @data-tag="top"]')
+      if len(comments) > 0:
+          item['top_comment'] = comments[0].select('.//div[@class="comment-text"]/p/text()').extract()
+
       return item
