@@ -8,7 +8,7 @@ class VideoSpider(CrawlSpider):
    name = "vid"
    allowed_domains = ["youtube.com"]
    start_urls = [
-           "http://www.youtube.com/charts/videos_views?t=a",
+           "http://www.youtube.com/charts/videos_views?t=a&gl=US",
    ]
 
    print "Starting..."
@@ -16,7 +16,7 @@ class VideoSpider(CrawlSpider):
    rules = (
         Rule(
             SgmlLinkExtractor(allow=('watch\?v=.*', ), 
-            restrict_xpaths=('//a[@class="video-title ellipsis"]')),
+            restrict_xpaths=('//div[@class="yt-uix-slider-slides " and position()=1 ]//a[@class="video-title ellipsis"]', )),
             callback='parse_item'
 	    ),
    )
