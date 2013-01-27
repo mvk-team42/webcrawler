@@ -15,10 +15,10 @@ class VideoSpider(CrawlSpider):
 
    rules = (
         Rule(
-		SgmlLinkExtractor(allow=('watch\?v=.*', )), 
-		callback='parse_item',
-		restrict_xpaths=('//a[@class="video-title ellipsis"]')
-	)
+            SgmlLinkExtractor(allow=('watch\?v=.*', ), 
+            restrict_xpaths=('//a[@class="video-title ellipsis"]')),
+            callback='parse_item'
+	    ),
    )
 
    def parse_item(self, response):
