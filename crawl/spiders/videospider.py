@@ -12,11 +12,11 @@ class VideoSpider(CrawlSpider):
 
    rules = (
         Rule(SgmlLinkExtractor(allow=('/watch?v=', )), callback='parse_item'),
-    )
+   )
 
-    def parse_item(self, response):
-       hxs = HtmlXPathSelector(response)
-       item = VideoItem()
-       item['title'] = hxs.select('//title/text()').extract()
-       item['top_comment'] = hxs.select('//li[@class="comment" and @data-tag="top"]')[0]
-       return item
+   def parse_item(self, response):
+      hxs = HtmlXPathSelector(response)
+      item = VideoItem()
+      item['title'] = hxs.select('//title/text()').extract()
+      item['top_comment'] = hxs.select('//li[@class="comment" and @data-tag="top"]')[0]
+      return item
