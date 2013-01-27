@@ -8,15 +8,17 @@ class VideoSpider(CrawlSpider):
    name = "vid"
    allowed_domains = ["youtube.com"]
    start_urls = [
-           "http://www.youtube.com/charts/videos_views?t=a&gl=US",
+           "http://www.youtube.com/charts/videos_views?t=a",
    ]
 
+   print "Starting..."
+
    rules = (
-        Rule(SgmlLinkExtractor(allow=('/watch?v=', )), callback='parse_item'),
+        Rule(SgmlLinkExtractor(allow=('watch\?v=.*', )), callback='parse_item'),
    )
 
    def parse_item(self, response):
-      self.log('Response from' + response.url)
+      print 'Response from' + response.url
       hxs = HtmlXPathSelector(response)
       item = VideoItem()
       item['title'] = hxs.select('//title/text()').extract()

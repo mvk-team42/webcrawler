@@ -12,4 +12,4 @@ class DmozItem(Item):
 
 class VideoItem(Item):
     title = Field()
-    views = Field()
+    top_comment = Field()
