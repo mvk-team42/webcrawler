@@ -14,11 +14,14 @@ class VideoSpider(CrawlSpider):
    print "Starting..."
 
    rules = (
-        Rule(SgmlLinkExtractor(allow=('watch\?v=.*', )), callback='parse_item'),
+        Rule(
+		SgmlLinkExtractor(allow=('watch\?v=.*', )), 
+		callback='parse_item',
+		restrict_xpaths=('//a[@class="video-title ellipsis"]')
+	)
    )
 
    def parse_item(self, response):
-      print 'Response from' + response.url
       hxs = HtmlXPathSelector(response)
       item = VideoItem()
       item['title'] = hxs.select('//title/text()').extract()
