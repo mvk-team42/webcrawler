@@ -12,7 +12,7 @@ class VideoSpider(BaseSpider):
 
    def parse(self, response):
        hxs = HtmlXPathSelector(response)
-       videos = hxs.select('items//a[@class="video-title ellipsis"]')
+       videos = hxs.select('//a[@class="video-title ellipsis"]')
        items = []
        for video in videos:
            item = VideoItem()
